@@ -1,0 +1,8 @@
+{
+    "IPADRESS": "127.0.0.1",
+    "PORT": 9000,
+    "AvatarParameterWatchHours": "/avatar/parameters/SFS_Hours",
+    "AvatarParameterWatchMinutes": "/avatar/parameters/SFS_WatchMinutes",
+    "AvatarParameterWatchSeconds": "/avatar/parameters/SFS_WatchSeconds",
+    "SENDCYCLE": 3
+  }
