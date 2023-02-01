@@ -4,5 +4,5 @@
     "AvatarParameterWatchHours": "/avatar/parameters/SFS_Hours",
     "AvatarParameterWatchMinutes": "/avatar/parameters/SFS_WatchMinutes",
     "AvatarParameterWatchSeconds": "/avatar/parameters/SFS_WatchSeconds",
-    "SENDCYCLE": 3
-  }
+    "SENDCYCLE": 1000
+}

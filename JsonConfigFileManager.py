@@ -32,4 +32,4 @@ class JsonConfigFileManager:
     def export(self, save_file_name):
         if save_file_name:
             with open(save_file_name, 'w') as f:
-                json.dump(dict(self.values), f)
+                json.dump(dict(self.values), f, indent=4)
