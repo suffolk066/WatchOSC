@@ -1,2 +1,7 @@
+*.spec
+pyinstaller.txt
 test/
 __pycache__/
+build/
+dist/
+WatchOSC/
