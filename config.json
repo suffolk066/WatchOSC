@@ -6,5 +6,5 @@
     "AvatarParameterWatchDay": "SFS_WatchDay",
     "AvatarParameterWatchHours": "SFS_WatchHours",
     "AvatarParameterWatchMinutes": "SFS_WatchMinutes",
-    "SENDCYCLE": 1000
+    "SENDCYCLE": 3000
 }

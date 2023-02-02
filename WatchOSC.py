@@ -13,7 +13,7 @@ except:
         JsonConfigFileManager.json.dump(dict(IPADRESS='127.0.0.1',PORT=9000,
         AvatarParameterWatchMonth='SFS_WatchMonth',AvatarParameterWatchWday='SFS_WatchWday',
         AvatarParameterWatchDay='SFS_WatchDay',AvatarParameterWatchHours='SFS_WatchHours',
-        AvatarParameterWatchMinutes='SFS_WatchMinutes',SENDCYCLE=1000), f, indent=4)
+        AvatarParameterWatchMinutes='SFS_WatchMinutes',SENDCYCLE=3000), f, indent=4)
     conf = JsonConfigFileManager.JsonConfigFileManager('./config.json')
 
 IP = conf.values.IPADRESS
@@ -24,9 +24,8 @@ DAY = conf.values.AvatarParameterWatchDay
 HOURS = conf.values.AvatarParameterWatchHours
 MINUTES = conf.values.AvatarParameterWatchMinutes
 SENDCYCLE = conf.values.SENDCYCLE
-
 PARAMETER = "/avatar/parameters/"
-set_thread = ""
+
 send_month = 0
 send_wday = 0
 send_day = 0
@@ -82,8 +81,6 @@ class Form(QWidget):
         day = time.strftime("%d")
         hours = time.strftime("%H")
         minutes = time.strftime("%M")
-        #print(hours + " : " + minutes)
-        #print(time.strftime("%w : %A : %m"))
 
         send_month = int(month)
         send_wday = int(wday)
@@ -121,13 +118,14 @@ class Form(QWidget):
         global IP, PORT, HOURS, MINUTES, SECONDS, SENDCYCLE
         IP = self.ln_ip.text()
         PORT = int(self.ln_port.text())
+        MONTH = self.ln_month.text()
+        WDAY = self.ln_wday.text()
+        DAY = self.ln_day.text()
         HOURS = self.ln_hours.text()
         MINUTES = self.ln_minutes.text()
-        SECONDS = self.ln_seconds.text()
         SENDCYCLE = int(self.ln_cycle.text())
-        conf.update({'IPADRESS':IP,'PORT':PORT,'AvatarParameterWatchHours':HOURS,'AvatarParameterWatchMinutes':MINUTES,'AvatarParameterWatchSeconds':SECONDS,'SENDCYCLE':SENDCYCLE})
+        conf.update({'IPADRESS':IP,'PORT':PORT,'AvatarParameterWatchMonth':MONTH,'AvatarParameterWatchWday':WDAY,'AvatarParameterWatchDay':DAY,'AvatarParameterWatchHours':HOURS,'AvatarParameterWatchMinutes':MINUTES,'SENDCYCLE':SENDCYCLE})
         conf.export('./config.json')
-CLIENT = ""
 
 app = QApplication([])
 form = Form()
