@@ -6,15 +6,19 @@ from PySide2.QtCore import QTimer
 from PySide2.QtGui import QIcon
 from pythonosc.udp_client import SimpleUDPClient
 
-try:
-    conf = JsonConfigFileManager.JsonConfigFileManager('./config.json')
-except:
-    with open('./config.json', 'w') as f:
-        JsonConfigFileManager.json.dump(dict(IPADRESS='127.0.0.1',PORT=9000,
-        AvatarParameterWatchMonth='SFS_WatchMonth',AvatarParameterWatchWday='SFS_WatchWday',
-        AvatarParameterWatchDay='SFS_WatchDay',AvatarParameterWatchHours='SFS_WatchHours',
-        AvatarParameterWatchMinutes='SFS_WatchMinutes',SENDCYCLE=3000), f, indent=4)
-    conf = JsonConfigFileManager.JsonConfigFileManager('./config.json')
+def get_config():
+    try:
+        conf = JsonConfigFileManager.JsonConfigFileManager('./config.json')
+    except:
+        with open('./config.json', 'w') as f:
+            JsonConfigFileManager.json.dump(dict(IPADRESS='127.0.0.1',PORT=9000,
+            AvatarParameterWatchMonth='SFS_WatchMonth',AvatarParameterWatchWday='SFS_WatchWday',
+            AvatarParameterWatchDay='SFS_WatchDay',AvatarParameterWatchHours='SFS_WatchHours',
+            AvatarParameterWatchMinutes='SFS_WatchMinutes',SENDCYCLE=3000), f, indent=4)
+        conf = JsonConfigFileManager.JsonConfigFileManager('./config.json')
+    return conf
+
+conf = get_config()
 
 IP = conf.values.IPADRESS
 PORT = conf.values.PORT
@@ -25,12 +29,6 @@ HOURS = conf.values.AvatarParameterWatchHours
 MINUTES = conf.values.AvatarParameterWatchMinutes
 SENDCYCLE = conf.values.SENDCYCLE
 PARAMETER = "/avatar/parameters/"
-
-send_month = 0
-send_wday = 0
-send_day = 0
-send_hours = 0
-send_minutes = 0
 
 class Form(QWidget):
     def __init__(self):
@@ -93,6 +91,7 @@ class Form(QWidget):
         CLIENT.send_message(PARAMETER + DAY, send_day)
         CLIENT.send_message(PARAMETER + HOURS, send_hours)
         CLIENT.send_message(PARAMETER + MINUTES, send_minutes)
+        print(f"{send_month}월 {send_day}일({send_wday}) {send_hours}시 {send_minutes}분")
 
     def start_message(self):
         if not self.isPushButtonClicked:
@@ -115,7 +114,7 @@ class Form(QWidget):
             pass
 
     def closeEvent(self, event):
-        global IP, PORT, HOURS, MINUTES, SECONDS, SENDCYCLE
+        global IP, PORT, MONTH, WDAY, DAY, HOURS, MINUTES, SENDCYCLE
         IP = self.ln_ip.text()
         PORT = int(self.ln_port.text())
         MONTH = self.ln_month.text()
@@ -124,7 +123,8 @@ class Form(QWidget):
         HOURS = self.ln_hours.text()
         MINUTES = self.ln_minutes.text()
         SENDCYCLE = int(self.ln_cycle.text())
-        conf.update({'IPADRESS':IP,'PORT':PORT,'AvatarParameterWatchMonth':MONTH,'AvatarParameterWatchWday':WDAY,'AvatarParameterWatchDay':DAY,'AvatarParameterWatchHours':HOURS,'AvatarParameterWatchMinutes':MINUTES,'SENDCYCLE':SENDCYCLE})
+        conf.update({'IPADRESS':IP,'PORT':PORT,'AvatarParameterWatchMonth':MONTH,'AvatarParameterWatchWday':WDAY,
+                    'AvatarParameterWatchDay':DAY,'AvatarParameterWatchHours':HOURS,'AvatarParameterWatchMinutes':MINUTES,'SENDCYCLE':SENDCYCLE})
         conf.export('./config.json')
 
 app = QApplication([])
